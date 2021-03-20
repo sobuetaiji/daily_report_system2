@@ -22,7 +22,7 @@ public class EmployeeValidator {
             errors.add(name_error);
         }
 
-        String password_error = validatePassword(e.getPassword());
+        String password_error = validatePassword(e.getPassword(), passwordCheckFlag);
         if(!password_error.equals("")) {
             errors.add(password_error);
         }
@@ -37,7 +37,7 @@ public class EmployeeValidator {
 
         if(codeDuplicateCheckFlag) {
             EntityManager em = DBUtil.createEntityManager();
-            long employees_count = (long)em.createNamedQuery("chackRegisteredCode", Long.class).setParameter("code", code).getSingleResult();
+            long employees_count = (long)em.createNamedQuery("checkRegisteredCode", Long.class).setParameter("code", code).getSingleResult();
             em.close();
             if(employees_count > 0) {
                 return "入力された社員番号の情報はすでに存在しています。";
@@ -55,8 +55,8 @@ public class EmployeeValidator {
         return "";
     }
 
-    private static String validatePassword(String password) {
-        if(password == null || password.equals("")){
+    private static String validatePassword(String password, Boolean passwordCheckFlag) {
+        if(passwordCheckFlag && (password == null || password.equals(""))){
             return "パスワードを入力してください。";
         }
 
