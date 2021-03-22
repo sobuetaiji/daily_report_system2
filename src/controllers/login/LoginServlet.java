@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
         request.setAttribute("_token", request.getSession().getId());
         request.setAttribute("hasError", false);
         if(request.getSession().getAttribute("flush") != null) {
-            request.setAttribute("flush",request.getSession().getAttribute("flush"));
+            request.setAttribute("flush", request.getSession().getAttribute("flush"));
             request.getSession().removeAttribute("flush");
             }
 
