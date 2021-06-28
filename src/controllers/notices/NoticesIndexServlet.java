@@ -1,4 +1,4 @@
-package controllers.toppage;
+package controllers.notices;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,16 +15,16 @@ import models.Employee;
 import models.Report;
 import utils.DBUtil;
 /**
- * Servlet implementation class TopPageIndexServlet
+ * Servlet implementation class NoticesIndexServlet
  */
-@WebServlet("/index.html")
-public class TopPageIndexServlet extends HttpServlet {
+@WebServlet("/notices/index")
+public class NoticesIndexServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TopPageIndexServlet() {
+    public NoticesIndexServlet() {
         super();
     }
 
@@ -50,16 +50,6 @@ public class TopPageIndexServlet extends HttpServlet {
         long members_count = (long) em.createNamedQuery("getMembersCount", Long.class)
                 .getSingleResult();
 
-        List<Report> reports = em.createNamedQuery("getMyAllReports",Report.class)
-                .setParameter("employee", login_employee)
-                .setFirstResult(15 * (page -1))
-                .setMaxResults(15)
-                .getResultList();
-
-        long reports_count = (long)em.createNamedQuery("getMyReportsCount", Long.class)
-                                        .setParameter("employee", login_employee)
-                                        .getSingleResult();
-
         List<Report> reads = em.createNamedQuery("getMyAllReads",Report.class)
                 .setParameter("employee", login_employee)
                 .setFirstResult(15 * (page -1))
@@ -76,10 +66,6 @@ public class TopPageIndexServlet extends HttpServlet {
         request.setAttribute("members_count", members_count);
         request.setAttribute("page", page);
 
-        request.setAttribute("reports", reports);
-        request.setAttribute("reports_count", reports_count);
-        request.setAttribute("page", page);
-
         request.setAttribute("reads", reads);
         request.setAttribute("reads_count", reads_count);
         request.setAttribute("page", page);
@@ -89,7 +75,7 @@ public class TopPageIndexServlet extends HttpServlet {
             request.getSession().removeAttribute("flush");
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/topPage/index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/notices/index.jsp");
         rd.forward(request, response);
     }
 

@@ -26,7 +26,27 @@
 <textarea name="content" rows="10" cols="50">${report.content}</textarea>
 <br />
 <br />
-<input type="hidden" name="approval" value="0" />
+<c:choose>
+<c:when test="${sessionScope.login_employee.admin_flag == 1}">
+<label for="comment">コメント</label><br />
+<textarea name="comment" rows="10" cols="50">${report.comment}</textarea>
+<br />
+<br />
+<label for="approval"></label>
+<select name="approval">
+<option value="1"<c:if test="${report.approval == 0}"> selected</c:if>>差し戻し</option>
+<option value="2"<c:if test="${report.approval == 1}"> selected</c:if>>承認</option>
+</select>
+<br />
+<br />
+</c:when>
+<c:otherwise>
+<label for="comment"></label>
+<input type="hidden" name="comment" value="${report.comment}" />
+<label for="approval"></label>
+<input type="hidden" name="approval" value="${report.approval}" />
+</c:otherwise>
+</c:choose>
 <c:choose>
 <c:when test="${sessionScope.login_employee.admin_flag == 0}">
 <input type="hidden" name="read_flag" value="0" />

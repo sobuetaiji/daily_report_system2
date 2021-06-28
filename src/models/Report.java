@@ -32,6 +32,22 @@ import javax.persistence.Table;
             name = "getMyReportsCount",
             query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
             ),
+    @NamedQuery(
+            name = "getAllMembers",
+            query = "SELECT r FROM Report AS r WHERE r.read_flag = 0 ORDER BY r.id DESC"
+            ),
+    @NamedQuery(
+            name = "getMembersCount",
+            query = "SELECT COUNT(r) FROM Report AS r WHERE r.read_flag = 0"
+            ),
+    @NamedQuery(
+            name = "getMyAllReads",
+            query = "SELECT r FROM Report AS r WHERE r.employee = :employee and r.read_flag = 1 ORDER BY r.id DESC"
+            ),
+    @NamedQuery(
+            name = "getMyReadsCount",
+            query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee and r.read_flag = 1"
+            ),
 })
 @Entity
 public class Report {
@@ -52,6 +68,15 @@ public class Report {
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    @Column(name = "comment")
+    private String comment;
+
+    @Column(name = "approval", nullable = false)
+    private Integer approval;
+
+    @Column(name = "read_flag", nullable = false)
+    private Integer read_flag;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp created_at;
@@ -97,6 +122,30 @@ public class Report {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+   public void setComment(String comment) {
+       this.comment = comment;
+   }
+
+   public Integer getApproval() {
+       return approval;
+   }
+
+   public void setApproval(Integer approval) {
+       this.approval = approval;
+   }
+
+    public Integer getRead_flag() {
+        return read_flag;
+    }
+
+    public void setRead_flag(Integer read_flag) {
+        this.read_flag = read_flag;
     }
 
     public Timestamp getCreated_at() {

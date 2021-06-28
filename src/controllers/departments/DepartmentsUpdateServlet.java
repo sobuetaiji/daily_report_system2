@@ -1,4 +1,4 @@
-package controllers.reports;
+package controllers.departments;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -13,20 +13,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Report;
-import models.validators.ReportValidator;
+import models.Department;
+import models.validators.DepartmentValidator;
 import utils.DBUtil;
 /**
- * Servlet implementation class ReportsUpdateServlet
+ * Servlet implementation class DepartmentsUpdateServlet
  */
-@WebServlet("/reports/update")
-public class ReportsUpdateServlet extends HttpServlet {
+@WebServlet("/departments/update")
+public class DepartmentsUpdateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportsUpdateServlet() {
+    public DepartmentsUpdateServlet() {
         super();
     }
 
@@ -38,26 +38,22 @@ public class ReportsUpdateServlet extends HttpServlet {
         if (_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            Report r = em.find(Report.class, (Integer) (request.getSession().getAttribute("report_id")));
+            Department d = em.find(Department.class, (Integer) (request.getSession().getAttribute("department_id")));
 
-            r.setReport_date(Date.valueOf(request.getParameter("report_date")));
-            r.setTitle(request.getParameter("title"));
-            r.setContent(request.getParameter("content"));
-            r.setComment(request.getParameter("comment"));
-            r.setApproval(Integer.parseInt(request.getParameter("approval")));
-            r.setRead_flag(Integer.parseInt(request.getParameter("read_flag")));
-            r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+            d.setDepartment_date(Date.valueOf(request.getParameter("department_date")));
+            d.setName(request.getParameter("name"));
+            d.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
-            List<String> errors = ReportValidator.validate(r);
+            List<String> errors = DepartmentValidator.validate(d);
             if(errors.size() > 0) {
                 em.close();
 
                 request.setAttribute("_token", request.getSession().getId());
-                request.setAttribute("report", r);
+                request.setAttribute("department", d);
                 request.setAttribute("errors", errors);
 
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/edit.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/departments/edit.jsp");
                 rd.forward(request, response);
             }else {
                 em.getTransaction().begin();
@@ -65,11 +61,11 @@ public class ReportsUpdateServlet extends HttpServlet {
                 em.close();
                 request.getSession().setAttribute("flush","登録が完了しました。");
 
-                request.getSession().removeAttribute("report_id");
+                request.getSession().removeAttribute("department_id");
 
-                response.sendRedirect(request.getContextPath() + "/reports/index");
+                response.sendRedirect(request.getContextPath() + "/departments/index");
             }
     }
+    }
 
-}
 }

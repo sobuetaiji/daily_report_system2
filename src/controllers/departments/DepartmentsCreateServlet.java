@@ -1,4 +1,4 @@
-package controllers.reports;
+package controllers.departments;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -13,23 +13,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Employee;
-//import models.Notification;
-import models.Report;
-import models.validators.ReportValidator;
+import models.Department;
+import models.validators.DepartmentValidator;
 import utils.DBUtil;
-
 /**
- * Servlet implementation class ReportsCreateServlet
+ * Servlet implementation class DepartmentsCreateServlet
  */
-@WebServlet("/reports/create")
-public class ReportsCreateServlet extends HttpServlet {
+@WebServlet("/departments/create")
+public class DepartmentsCreateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportsCreateServlet() {
+    public DepartmentsCreateServlet() {
         super();
     }
 
@@ -41,46 +38,43 @@ public class ReportsCreateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            Report r = new Report();
-            r.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
+            Department d = new Department();
+//            d.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
 
-            Date report_date = new Date(System.currentTimeMillis());
-            String rd_str = request.getParameter("report_date");
+            Date department_date = new Date(System.currentTimeMillis());
+            String rd_str = request.getParameter("department_date");
             if(rd_str != null && !rd_str.equals("")) {
-                report_date = Date.valueOf(request.getParameter("report_date"));
+                department_date = Date.valueOf(request.getParameter("department_date"));
             }
-            r.setReport_date(report_date);
+            d.setDepartment_date(department_date);
 
-            r.setTitle(request.getParameter("title"));
-            r.setContent(request.getParameter("content"));
-            r.setApproval(Integer.parseInt(request.getParameter("approval")));
-            r.setRead_flag(Integer.parseInt(request.getParameter("read_flag")));
+            d.setName(request.getParameter("name"));
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            r.setCreated_at(currentTime);
-            r.setUpdated_at(currentTime);
+            d.setCreated_at(currentTime);
+            d.setUpdated_at(currentTime);
 
-            List<String> errors = ReportValidator.validate(r);
+            List<String> errors = DepartmentValidator.validate(d);
             if(errors.size() > 0) {
                 em.close();
 
                 request.setAttribute("_token", request.getSession().getId());
-                request.setAttribute("report", r);
+                request.setAttribute("department", d);
                 request.setAttribute("errors", errors);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/new.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/departments/new.jsp");
                 rd.forward(request, response);
             } else {
             em.getTransaction().begin();
-            em.persist(r);
+            em.persist(d);
             em.getTransaction().commit();
             em.close();
             request.getSession().setAttribute("flush","登録が完了しました。");
 
 
-            response.sendRedirect(request.getContextPath() + "/reports/index");
+            response.sendRedirect(request.getContextPath() + "/departments/index");
             }
 
         }
     }
-}
+    }

@@ -1,6 +1,7 @@
 package controllers.employees;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Department;
 import models.Employee;
 import utils.DBUtil;
 /**
@@ -34,7 +36,10 @@ public class EmployeesEditServlet extends HttpServlet {
 
         Employee e = em.find(Employee.class, Integer.parseInt(request.getParameter("id")));
 
+        List<Department> depts = em.createNamedQuery("getAllDepartments", Department.class).getResultList();
+
         em.close();
+        request.setAttribute("depts", depts);
 
         request.setAttribute("employee", e);
         request.setAttribute("_token", request.getSession().getId());

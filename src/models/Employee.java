@@ -46,6 +46,9 @@ public class Employee {
     @Column(name = "password", length = 64, nullable = false)
     private String password;
 
+    @Column(name = "dept", nullable = false)
+    private String dept;
+
     @Column(name = "admin_flag", nullable = false)
     private Integer admin_flag;
 
@@ -88,6 +91,14 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
     }
 
     public Integer getAdmin_flag() {
