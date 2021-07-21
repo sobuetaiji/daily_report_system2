@@ -20,14 +20,14 @@
 <br />
 <br />
 <label>パスワード<br />
-<input type="text" name="password" value="${employee.password}" />
+<input type="password" name="password" />
 </label>
 <br />
 <br />
 <label>部署<br/>
 <select name="dept">
 <c:forEach var="dept" items="${depts}">
-<OPTION value="${dept.name}">${dept.name}</OPTION>
+<option value="${dept.name}">${dept.name}</option>
 </c:forEach>
 </select>
 </label>
