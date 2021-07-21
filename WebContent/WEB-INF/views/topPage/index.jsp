@@ -83,7 +83,7 @@
                         </td>
                         <td class="read_name"><c:out value="${read.employee.name}" /></td>
                         <td class="read_date"><fmt:formatDate value='${read.report_date}' pattern='yyy-MM-dd' /></td>
-                        <td class="read_title">${report.title}</td>
+                        <td class="read_title">${read.title}</td>
                         <td class="read_action"><a href="<c:url value='/reports/show?id=${read.id}' />">詳細を見る</a></td>
                         <td>
                         <c:choose>

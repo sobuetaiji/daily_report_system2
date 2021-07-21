@@ -179,3 +179,6 @@ pre {
 h3 {
     font-size: larger;
 }
+table#read_list .read_title {
+    width: 30%;
+}
