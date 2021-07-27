@@ -19,7 +19,7 @@
                         </tr>
                         <tr>
                             <th>部署</th>
-                            <td><c:out value="${employee.dept }" /></td>
+                            <td><c:out value="${employee.dept}" /></td>
                         </tr>
                         <tr>
                             <th>権限</th>

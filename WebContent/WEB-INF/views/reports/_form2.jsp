@@ -44,7 +44,14 @@
 <label for="comment"></label>
 <input type="hidden" name="comment" value="${report.comment}" />
 <label for="approval"></label>
+<c:choose>
+<c:when test="${report.approval == 1}">
+<input type="hidden" name="approval" value="3" />
+</c:when>
+<c:otherwise>
 <input type="hidden" name="approval" value="${report.approval}" />
+</c:otherwise>
+</c:choose>
 </c:otherwise>
 </c:choose>
 <c:choose>

@@ -12,6 +12,7 @@
         <table id="report_list">
             <tbody>
                 <tr>
+                    <th class="report_approval">承認</th>
                     <th class="report_name">氏名</th>
                     <th class="report_date">日付</th>
                     <th class="report_title">タイトル</th>
@@ -19,6 +20,14 @@
                 </tr>
                 <c:forEach var="report" items="${reports}" varStatus="status">
                 <tr class="row${status.count % 2}">
+                    <td class="report_approval">
+                        <c:choose>
+                        <c:when test="${report.approval == 0}">未承認</c:when>
+                        <c:when test="${report.approval == 1}">差し戻し</c:when>
+                        <c:when test="${report.approval == 2}">承認</c:when>
+                        <c:otherwise>再承認待ち</c:otherwise>
+                        </c:choose>
+                    </td>
                     <td class="report_name"><c:out value="${report.employee.name}" /></td>
                     <td class="report_date"><fmt:formatDate value='${report.report_date}' pattern='yyyy-MM-dd' /></td>
                     <td class="report_title">${report.title}</td>

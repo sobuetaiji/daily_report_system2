@@ -27,12 +27,13 @@
                     <c:choose>
                     <c:when test="${member.approval == 0}">未承認</c:when>
                     <c:when test="${member.approval == 1}">差し戻し</c:when>
-                    <c:otherwise>承認</c:otherwise>
+                    <c:when test="${member.approval == 2}">承認</c:when>
+                    <c:otherwise>再承認待ち</c:otherwise>
                     </c:choose>
                     </td>
                     <td class="member_name"><c:out value="${member.employee.name}" /></td>
                     <td class="member_date"><fmt:formatDate value='${member.report_date}' pattern='yyy-MM-dd' /></td>
-                    <td class="member_title">${notice.title}</td>
+                    <td class="member_title">${member.title}</td>
                     <td class="member_action"><a href="<c:url value='/reports/show?id=${member.id}' />">詳細を見る</a></td>
                     <td class="member_read">
                         <c:choose>
@@ -75,12 +76,13 @@
                         <c:choose>
                         <c:when test="${read.approval == 0}">未承認</c:when>
                         <c:when test="${read.approval == 1}">差し戻し</c:when>
-                        <c:otherwise>承認</c:otherwise>
+                        <c:when test="${read.approval == 2}">承認</c:when>
+                        <c:otherwise>再承認待ち</c:otherwise>
                         </c:choose>
                         </td>
                         <td class="read_name"><c:out value="${read.employee.name}" /></td>
                         <td class="read_date"><fmt:formatDate value='${read.report_date}' pattern='yyy-MM-dd' /></td>
-                        <td class="read_title">${report.title}</td>
+                        <td class="read_title">${read.title}</td>
                         <td class="read_action"><a href="<c:url value='/reports/show?id=${read.id}' />">詳細を見る</a></td>
                         <td>
                         <c:choose>

@@ -29,7 +29,8 @@
                         <c:choose>
                         <c:when test="${member.approval == 0}">未承認</c:when>
                         <c:when test="${member.approval == 1}">差し戻し</c:when>
-                        <c:otherwise>承認</c:otherwise>
+                        <c:when test="${member.approval == 2}">承認</c:when>
+                        <c:otherwise>再承認待ち</c:otherwise>
                         </c:choose>
                         </td>
                         <td class="member_name"><c:out value="${member.employee.name}" /></td>
@@ -78,7 +79,8 @@
                         <c:choose>
                         <c:when test="${read.approval == 0}">未承認</c:when>
                         <c:when test="${read.approval == 1}">差し戻し</c:when>
-                        <c:otherwise>承認</c:otherwise>
+                        <c:when test="${read.approval == 2}">承認</c:when>
+                        <c:otherwise>再承認待ち</c:otherwise>
                         </c:choose>
                         </td>
                         <td class="read_name"><c:out value="${read.employee.name}" /></td>
@@ -128,7 +130,8 @@
                         <c:choose>
                         <c:when test="${report.approval == 0}">未承認</c:when>
                         <c:when test="${report.approval == 1}">差し戻し</c:when>
-                        <c:otherwise>承認</c:otherwise>
+                        <c:when test="${report.approval == 2}">承認</c:when>
+                        <c:otherwise>再承認待ち</c:otherwise>
                         </c:choose>
                         </td>
                         <td class="report_name"><c:out value="${report.employee.name}" /></td>

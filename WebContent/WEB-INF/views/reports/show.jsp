@@ -11,7 +11,8 @@
                <c:choose>
                <c:when test="${report.approval == 0}">未承認</c:when>
                <c:when test="${report.approval == 1}">差し戻し</c:when>
-               <c:otherwise>承認</c:otherwise>
+               <c:when test="${report.approval == 2}">承認</c:when>
+               <c:otherwise>再承認待ち</c:otherwise>
                </c:choose>
                </p>
 
