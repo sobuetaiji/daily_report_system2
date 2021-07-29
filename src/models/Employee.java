@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -46,8 +48,9 @@ public class Employee {
     @Column(name = "password", length = 64, nullable = false)
     private String password;
 
-    @Column(name = "dept", nullable = false)
-    private String dept;
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
 
     @Column(name = "admin_flag", nullable = false)
     private Integer admin_flag;
@@ -93,12 +96,12 @@ public class Employee {
         this.password = password;
     }
 
-    public String getDept() {
-        return dept;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDept(String dept) {
-        this.dept = dept;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public Integer getAdmin_flag() {

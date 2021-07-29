@@ -25,9 +25,9 @@
 <br />
 <br />
 <label>部署<br/>
-<select name="dept">
-<c:forEach var="dept" items="${depts}">
-<option value="${dept.name}">${dept.name}</option>
+<select name="department">
+<c:forEach var="department" items="${depts}">
+<option value="${department.id}">${department.name}</option>
 </c:forEach>
 </select>
 </label>

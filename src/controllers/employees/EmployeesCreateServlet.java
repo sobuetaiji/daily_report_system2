@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Department;
 import models.Employee;
 import models.validators.EmployeeValidator;
 import utils.DBUtil;
@@ -39,7 +40,12 @@ public class EmployeesCreateServlet extends HttpServlet {
             if(_token != null && _token.equals(request.getSession().getId())) {
                 EntityManager em = DBUtil.createEntityManager();
 
+
+                Department d = em.find(Department.class, Integer.parseInt(request.getParameter("department")));
+
                 Employee e = new Employee();
+
+                e.setDepartment(d);
 
                 e.setCode(request.getParameter("code"));
                 e.setName(request.getParameter("name"));
@@ -49,13 +55,14 @@ public class EmployeesCreateServlet extends HttpServlet {
                                 (String)this.getServletContext().getAttribute("pepper")
                                 )
                         );
-                e.setDept(request.getParameter("dept"));
                 e.setAdmin_flag(Integer.parseInt(request.getParameter("admin_flag")));
 
                 Timestamp currentTime = new Timestamp(System.currentTimeMillis());
                 e.setCreated_at(currentTime);
                 e.setUpdated_at(currentTime);
                 e.setDelete_flag(0);
+
+                List<Department> depts = em.createNamedQuery("getAllDepartments", Department.class).getResultList();
 
                 List<String> errors = EmployeeValidator.validate(e, true, true);
                 if(errors.size() > 0) {
@@ -64,6 +71,7 @@ public class EmployeesCreateServlet extends HttpServlet {
                     request.setAttribute("_token", request.getSession().getId());
                     request.setAttribute("employee", e);
                     request.setAttribute("errors", errors);
+                    request.setAttribute("depts", depts);
 
                     RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/new.jsp");
                     rd.forward(request, response);

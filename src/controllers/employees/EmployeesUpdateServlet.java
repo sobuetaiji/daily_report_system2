@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Department;
 import models.Employee;
 import models.validators.EmployeeValidator;
 import utils.DBUtil;
@@ -40,6 +41,8 @@ public class EmployeesUpdateServlet extends HttpServlet {
 
             Employee e = em.find(Employee.class, (Integer) (request.getSession().getAttribute("employee_id")));
 
+            Department d = em.find(Department.class, Integer.parseInt(request.getParameter("department")));
+
             Boolean codeDuplicateCheckFlag = true;
             if(e.getCode().equals(request.getParameter("code"))) {
                 codeDuplicateCheckFlag = false;
@@ -61,7 +64,7 @@ public class EmployeesUpdateServlet extends HttpServlet {
             }
 
             e.setName(request.getParameter("name"));
-            e.setDept(request.getParameter("dept"));
+            e.setDepartment(d);
             e.setAdmin_flag(Integer.parseInt(request.getParameter("admin_flag")));
             e.setUpdated_at(new Timestamp(System.currentTimeMillis()));
             e.setDelete_flag(0);

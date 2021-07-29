@@ -20,7 +20,7 @@
                 <tr class="row${status.count % 2}">
                     <td><c:out value="${employee.code}" /></td>
                     <td><c:out value="${employee.name}" /></td>
-                    <td><c:out value="${employee.dept}" /></td>
+                    <td><c:out value="${employee.department.name}" /></td>
                     <td>
                         <c:choose>
                             <c:when test="${employee.delete_flag == 1}">
